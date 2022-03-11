@@ -1,7 +1,7 @@
+from concurrent.futures import process
 import datetime
-import math
+from logging import exception
 from selenium import webdriver
-import selenium
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,12 +12,18 @@ import time
 import os
 datarow = []
 colomns = []
-#Put Your chrome driver path here
-chromedriverpath = "D:\chromedriver.exe"
+with open('./Input/settings.txt', 'r') as f:
+    try:
+        mainUrl = f.readline()
+        chromedriverpath = f.readline()
+    except Exception as e :
+        print('Please provide a valid url or chrome driver path'+e.args[0])
+
+    
+    
 #Just an rng factor for the delay between requests to make the bot more human
 def random_float(low, high):
     return random.random()*(high-low) + low
-mainUrl = 'https://www.facebook.com/ritucollection3'
 chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
